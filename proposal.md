@@ -31,7 +31,7 @@ Each of these functions should (in decreasing priority):
 1. Be implemented coherently with ArviZ API. That is, for stats functions, take as input an InferenceData object or xarray and 
 return structured and easily interpreted data.
 1. Have a docstring detailing its use, inputs and outputs
-1. Have tests covering most ususal use cases, checking different parameter combination and warning messages is appliable
+1. Have tests covering most ususal use cases, checking different parameter combination and warning messages if appliable
 1. Include examples on its usage, notes on its implementation (if appliable) and references in docstring
 1. Be thoroughly explained in [arviz-resources](https://github.com/arviz-devs/arviz_resources)
 
