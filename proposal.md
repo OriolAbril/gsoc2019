@@ -71,7 +71,7 @@ with my inference results in many aspects such as storing, plotting or comparing
 
 I have worked in many projects related with scientific programming, both for subjects 
 in my BSc and MSc and in extracurricular activities. In addition, I participated actively in 
-StackOverflow, mainly in questions related to matplotlib, numpy, pandas and vectorization. 
+[StackOverflow](https://stackoverflow.com/users/2504700/xg-plt-py), mainly in questions related to matplotlib, numpy, pandas and vectorization. 
 I have used ArviZ for my Master's Thesis, therefore I am familiar with most of its functions and API.
 
 Moreover, I have already contributed to ArviZ:
