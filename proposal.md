@@ -62,10 +62,10 @@ Delieverables
 
 ## Why me?
 
-I am a Bachelor in Physics Engineering and Master in High Energy Physics, Astrophysics and Cosmology. 
+I am a Bachelor in Engineering Physics and Master in High Energy Physics, Astrophysics and Cosmology. 
 Most of my projects have been related with modelling, and many of them involved Bayesian modelling, 
-generally with emcee. I started using ArviZ immediately after discovering its existence because it 
-really helped me with my inference results in many aspects such as storing, plotting or comparing them.
+generally with emcee. I started using ArviZ right after discovering it because it really helped me 
+with my inference results in many aspects such as storing, plotting or comparing them.
 
 ### Development Experience
 
