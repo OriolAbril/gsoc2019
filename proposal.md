@@ -33,7 +33,7 @@ return structured and easily interpreted data.
 1. Have a docstring detailing its use, inputs and outputs
 1. Have tests covering most ususal use cases, checking different parameter combination and warning messages if appliable
 1. Include examples on its usage, notes on its implementation (if appliable) and references in docstring
-1. Be thoroughly explained in [arviz-resources](https://github.com/arviz-devs/arviz_resources)
+1. Be thoroughly explained in [arviz_resources](https://github.com/arviz-devs/arviz_resources)
 
 Therefore, this project will require intensive usage of many external libraries, mainly `xarray`, `sphinx`, 
 `pytest` and in less extent `matplotlib`. GitHub issues will also play a key role in discussing ArviZ's API
@@ -43,22 +43,91 @@ examples and documentation.
 
 ## Schedule of Deliverables
 
+The project will start with a design phase to decide with the core developers and the community which functions (if any) 
+should be added to ArviZ and to agree on a unique API. In addition, while working on these two deliverables, I will 
+familiarize myself with the algorithms and libraries used in the project.
 
+The second phase will build on top of the previous deliverables, guaranteeing that all selected functions fulfill points 
+1-3 (as explained above). I will start with information criteria (IC) related functions and afterwards work with MCMC diagnostics.
 
-### **Community Bonding Period**
+Eventually, point 4 will be tackled for as many functions as possible. However, point 5 will be adressed following the 
+draft of its table of contents one subject at a time in order to ensure the quality and thoroughness of the resources written.
 
+### **Community Bonding Period** (before May 19th)
 
+##### Before April 25th
 
-### **Phase 1**
+* Familiarize with the needed libraries: ArviZ, pytest, xarray, sphinx 
+* Familiarize and understand all the algorithms involved
+  - Read references in ArviZ docs and in issues requesting new stats or diagnostic features
+* Contribute to ArviZ tests, preferably but not exclusively to project related functionalities. 
 
-Delieverables
+##### April 25th - May 6th
 
-### **Phase 2**
+* Familiarize and understand all the algorithms involved
+  - Read ArviZ's or similar libraries implementation
+* Guarantee that the tests of the stats functions are completely thorough
+* Create a proposal for functions to add to ArviZ and for the unique API
 
-Delieverables
+Expected results:
 
-### **Final Week**
+* Reading literature and implementation of the algorithms that will be used is essential to understand them
+and to asses which ones should be present in ArviZ.
+* Reading ArviZ implementation of the already present functions will also be a way to check their documentation.
+* Working with tests will provide me with hands on experience with the code, with the extra advantage of making error 
+detection easier in the next steps of the project.
+* One (or several) issue with the proposal for the functions to add to ArviZ and for the API (i.e. `plot_khat` and 
+`plot_autocorr` both need to execute a stats/diagnostics function before plotting, `plot_khat` makes the used execute 
+the function and its input is not InfereceData whereas `plot_autocorr`'s input is InferenceData and calls the autocorr 
+function itself). 
 
+##### May 6th - 19th
+
+* Write examples of existing IC functions
+* Participate in the discussion of API and functions design and decide on one of the alternatives
+* Decide the methodology to include the work in the [final evaluation](https://google.github.io/gsocguides/student/evaluations#final-evaluations-and-work-product-submission)
+
+### **Phase 1** (May 20th  - June 24th)
+
+##### May 20th - June 9nd
+
+* Implement and document IC functions
+* Write their tests
+  
+##### June 10th - 24th
+
+* Write IC examples
+* Guarantee documentation and tests of MCMC diagnostics (and implementation if appliable)
+
+### **Phase 2** (June 25th - July 21st)
+
+##### June 25th - July 6th
+
+* Guarantee examples and tests for MCMC diagnostics
+* Check behaviour in a wide range of real cases (extra examples and possible issues from ArviZ prereleases users)
+* Correct bugs
+
+##### July 7th - 21st
+
+* Correct bugs
+* Profile memory and cpu usage to identify possible bottlenecks
+* Write a draft of one related section in ArviZ-resources (optional)
+
+### **Final Weeks** (July 22nd - Agust 19th)
+
+##### July 7th - 21st
+
+* Finish or continue working on any pending task
+* Contribute to a related section in ArviZ-resources
+
+##### July 7th - 21st
+
+* Write GSoC final evaluation
+
+### **After GSoC** 
+
+* Finish the still pending goals if any.
+* Contribute solving bugs on the created functions and answering issues about their usage.
 
 ## Why me?
 
@@ -105,4 +174,6 @@ either disregarding or not even knowing the limitations of the models and algori
 that ArviZ can help a lot to extend and explain Bayesian modelling techiques to a really wide community. It will approach
 many algorithms and best practices to people with limited programming habilities, together with a thorough documentation, 
 which will cover its uses and limitations.
+
+## References
 
