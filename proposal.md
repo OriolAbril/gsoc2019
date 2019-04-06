@@ -55,14 +55,14 @@ draft of its table of contents one subject at a time in order to ensure the qual
 
 ### **Community Bonding Period** (before May 19th)
 
-##### Before April 25th
+##### Before April 24th
 
 * Familiarize with the needed libraries: ArviZ, pytest, xarray, sphinx 
 * Familiarize and understand all the algorithms involved
   - Read references in ArviZ docs and in issues requesting new stats or diagnostic features
 * Contribute to ArviZ tests, preferably but not exclusively to project related functionalities. 
 
-##### April 25th - May 6th
+##### April 25th - May 5th
 
 * Familiarize and understand all the algorithms involved
   - Read ArviZ's or similar libraries implementation
@@ -115,12 +115,12 @@ function itself).
 
 ### **Final Weeks** (July 22nd - Agust 19th)
 
-##### July 7th - 21st
+##### July 22nd - 4th
 
 * Finish or continue working on any pending task
 * Contribute to a related section in ArviZ-resources
 
-##### July 7th - 21st
+##### July 5th - 19th
 
 * Write GSoC final evaluation
 
