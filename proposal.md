@@ -2,40 +2,37 @@
 
 ## Abstract
 
-ArviZ is a Python package which provides tools for exploratory analysis of 
-Bayesian models, from diagnostics to visualization. It is designed as a 
-backend-agnostic tool in order to reach the widest user base possible and thus 
-contribute to extend best practices among the Bayesian community.
+ArviZ is a Python package for exploratory analysis of Bayesian models, from diagnostics to visualization. 
+It is designed as a backend-agnostic tool with the goal to reach the widest user base and thus contribute 
+to extend best practices among Bayesian inference practitioners.
 
-Some of the key problems in this field are model comparison and convergence analysis. 
-Model comparison is not trivial because of the different structures and number of 
-parameters of each model. Fortunately, there are some information criteria (i.e. 
-LOO, WAIC) that can be used for this task. Even though convergence is proven for 
-infinite iterations, it is not the case for finite MCMC runs, which can be arbitrarily 
-bad. Convergence assessment must take into account both intra- and inter-chain correlations.
+Two key problems in this field are model comparison and convergence analysis. Model comparison is not 
+trivial because of the different structures and number of parameters of each model. Fortunately, there 
+are some information criteria (i.e. leave-one-out (LOO) cross-validation) that can be used for this task. Even 
+though convergence is proven for infinite iterations, it is not the case for finite MCMC runs, which can 
+be arbitrarily bad. Convergence assessment must take into account both intra- and inter-chain correlations.
 
-ArviZ implements many of these algorithms for diagnostic and comparison, at least 
-at a preliminary level, but it still lacks plots and tools to ease and improve its 
-interpretation. This project is about implementing all these tools while paying special 
-attention to testing and documentation (with examples) of both the new functionalities 
-and the related functionalities already implemented.
+ArviZ implements many of these algorithms for diagnostic and comparison, at least at a preliminary level, 
+but it still lacks plots and tools to ease and improve its interpretation. This project seeks to design 
+and implement these tools. Moreover, it will pay special attention to testing and documentation with examples 
+not only of the new functionalities, but also of the already implemented ones.
 
 ## Technical Details
 
-This project will analyze the diagnostic and stats functions in ArviZ to assess the stage they are in. 
+This project will analyze the diagnostic and statistical functions in ArviZ to assess the stage they are in. 
 In addition, there are some plots related to the interpretation of these functions (i.e. `plot_khat` or 
 `plot_autocorr`) which will also be analyzed (and created if any relevant function is missing, which for example, may 
-be the case of the LOO-PIT plot requested in [#80](https://github.com/arviz-devs/arviz/issues/80)). 
+be the case of the LOO probability integral transformation (PIT) plot requested in [#80](https://github.com/arviz-devs/arviz/issues/80)). 
 Each of these functions should (in decreasing priority):
 
-1. Be implemented coherently with ArviZ API. That is, for stats functions, take as input an InferenceData object or xarray and 
+1. Be implemented coherently with ArviZ API. More specifically, for statistical functions, take as input an InferenceData object or xarray and 
 return structured and easily interpreted data.
 1. Have a docstring detailing its use, inputs and outputs
-1. Have tests covering most ususal use cases, checking different parameter combination and warning messages if appliable
+1. Have tests covering the most frequent use cases. This includes checking different parameter combination and warning messages, if appliable
 1. Include examples on its usage, notes on its implementation (if appliable) and references in docstring
 1. Be thoroughly explained in [arviz_resources](https://github.com/arviz-devs/arviz_resources)
 
-Therefore, this project will require intensive usage of many external libraries, mainly `xarray`, `sphinx`, 
+Therefore, this project will require intensive usage of many external libraries, such as `xarray`, `sphinx`, 
 `pytest` and in less extent `matplotlib`. GitHub issues will also play a key role in discussing ArviZ's API
 (i.e. [#501](https://github.com/arviz-devs/arviz/issues/501),  or [#415](https://github.com/arviz-devs/arviz/issues/415)).
 It will also be essential to have a deep understanding of the mathematics behind the algorithms in order to write relevant 
@@ -101,17 +98,23 @@ function itself).
 
 ## Why me?
 
-I am a Bachelor in Engineering Physics and Master in High Energy Physics, Astrophysics and Cosmology. 
-Most of my projects have been related with modelling, and many of them involved Bayesian modelling, 
-generally with emcee. I started using ArviZ right after discovering it because it really helped me 
-with my inference results in many aspects such as storing, plotting or comparing them.
+My name is Oriol Abril. I graduated from Engineering Physics at Polytechnical University of Catalonia in 2017. 
+I am currently graduating in High Enegry Physics, Astrophysics and Cosmology at the Autonomous University of Barcelona. 
+Since my first research experience in 2013, I have made use of multiple programming languages, including Python, Matlab 
+or Fortran. Many of my projects have involved Bayesian inference, especially with 
+[emcee](https://emcee.readthedocs.io/en/latest/). Upon discovering ArviZ nearly a year ago and realizing 
+its power with regard to my inference results -in storing, plotting, or comparing them, among other 
+aspects- I began to extensively use it.
 
 ### Development Experience
 
-I have worked in many projects related with scientific programming, both for subjects 
-in my BSc and MSc and in extracurricular activities. In addition, I participated actively in 
-[StackOverflow](https://stackoverflow.com/users/2504700/xg-plt-py), mainly in questions related to matplotlib, numpy, pandas and vectorization. 
-I have used ArviZ for my Master's Thesis, therefore I am familiar with most of its functions and API.
+I have worked in many projects related with scientific programming, not only during my undergraduate and 
+graduate studies, but also in extracurricular activities such as collaborations with the [Molecular Spectroscopy 
+Group](https://www.isis.stfc.ac.uk/Pages/Molecular-Spectroscopy.aspx) at the ISIS neutron source and with the High 
+Energy Physics Institute ([IFAE](http://www.ifae.es/eng/)). In addition, I have participated actively in 
+[StackOverflow](https://stackoverflow.com/users/2504700/xg-plt-py), mainly in questions related to matplotlib, 
+numpy, pandas and vectorization. 
+I have used ArviZ for my Master's Thesis and, as a result, I am familiar with most of its functions and API.
 
 Moreover, I have already contributed to ArviZ:
 
@@ -119,6 +122,7 @@ Moreover, I have already contributed to ArviZ:
   - [#436](https://github.com/arviz-devs/arviz/pull/436): Add emcee and pyro cookbook examples [MERGED]
   - [#616](https://github.com/arviz-devs/arviz/pull/616): Update Docker instructions [MERGED]
   - [#630](https://github.com/arviz-devs/arviz/pull/630): 3 documentation issue fixes [OPEN]
+  - [#638](https://github.com/arviz-devs/arviz/pull/638): Add `from_emcee` inline examples [OPEN]
 * Testing
   - [#624](https://github.com/arviz-devs/arviz/pull/624): Helper method for tests [MERGED]
 * IO:
@@ -128,20 +132,21 @@ Moreover, I have already contributed to ArviZ:
 * Plotting bugs:
   - [#615](https://github.com/arviz-devs/arviz/pull/615): `plot_pair` return value [MERGED]
   - [#619](https://github.com/arviz-devs/arviz/pull/619): Remove `plot_density` tight_layout [MERGED]
+  - [#637](https://github.com/arviz-devs/arviz/pull/637): Fix `plot_pair` issue and add extra options to `plot_kde` [OPEN]
 * Other
   - [#620](https://github.com/arviz-devs/arviz/pull/620): Add logging arviz wide [OPEN]
 
 ### Other Experiences
 
-I have covered extensive courses in Probability, Statistics, Algebra, Numerical Computation and related subjects both 
-during my BSc and MSc.
+In addition to my academic background and programming experience, I have also performed extensive courses in 
+Probability, Statistics, Algebra, Numerical Computation and related subjects during my undergraduate and graduate studies.
 
 ## Why ArviZ?
 
-I am really interested in modelling and inference in general and in Bayesian modelling in particular. 
-I have realized that in many cases modelling is treated as a limited set of models and techniques _universally_ appliable, 
-either disregarding or not even knowing the limitations of the models and algorithms used. Therefore, I believe 
-that ArviZ can help a lot to extend and explain Bayesian modelling techiques to a really wide community. It will approach
+I have always been really interested in modelling and inference, specifically in Bayesian modelling. In my research projects,
+I have come to realize that in many cases modelling is treated as a limited set of models and techniques _universally_ 
+appliable, either disregarding or not even knowing the limitations of the models and algorithms used. I believe 
+that ArviZ is capable of extending and explaining Bayesian modelling techiques to a really wide community. It will approach
 many algorithms and best practices to people with limited programming habilities, together with a thorough documentation, 
 which will cover its uses and limitations.
 
