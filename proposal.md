@@ -53,21 +53,19 @@ The second phase will build on top of the previous deliverables, guaranteeing th
 Eventually, point 4 will be tackled for as many functions as possible. However, point 5 will be adressed following the 
 draft of its table of contents one subject at a time in order to ensure the quality and thoroughness of the resources written.
 
+![Task schedule](gnatt.png)
+
 ### **Community Bonding Period** (before May 19th)
 
-##### Before April 24th
-
-* Familiarize with the needed libraries: ArviZ, pytest, xarray, sphinx 
-* Familiarize and understand all the algorithms involved
+* P1: Familiarize with the needed libraries: ArviZ, pytest, xarray, sphinx 
+* P2: Familiarize and understand all the algorithms involved
   - Read references in ArviZ docs and in issues requesting new stats or diagnostic features
-* Contribute to ArviZ tests, preferably but not exclusively to project related functionalities. 
-
-##### April 25th - May 5th
-
-* Familiarize and understand all the algorithms involved
   - Read ArviZ's or similar libraries implementation
-* Guarantee that the tests of the stats functions are completely thorough
-* Create a proposal for functions to add to ArviZ and for the unique API
+* P3: Contribute to ArviZ tests, preferably but not exclusively to project related functionalities.   
+* P4: Create a proposal for functions to add to ArviZ and for the unique API
+* P5: Decide the methodology to include the work in the [final evaluation](https://google.github.io/gsocguides/student/evaluations#final-evaluations-and-work-product-submission)
+* P6: Write examples of existing IC functions
+* P7: Participate in the discussion of API and functions design and decide on one of the alternatives
 
 Expected results:
 
@@ -81,53 +79,25 @@ detection easier in the next steps of the project.
 the function and its input is not InfereceData whereas `plot_autocorr`'s input is InferenceData and calls the autocorr 
 function itself). 
 
-##### May 6th - 19th
+### **Phase 1** (May 20th  - August 19th)
 
-* Write examples of existing IC functions
-* Participate in the discussion of API and functions design and decide on one of the alternatives
-* Decide the methodology to include the work in the [final evaluation](https://google.github.io/gsocguides/student/evaluations#final-evaluations-and-work-product-submission)
-
-### **Phase 1** (May 20th  - June 24th)
-
-##### May 20th - June 9nd
-
-* Implement and document IC functions
-* Write their tests
-  
-##### June 10th - 24th
-
-* Write IC examples
-* Guarantee documentation and tests of MCMC diagnostics (and implementation if appliable)
-
-### **Phase 2** (June 25th - July 21st)
-
-##### June 25th - July 6th
-
-* Guarantee examples and tests for MCMC diagnostics
-* Check behaviour in a wide range of real cases (extra examples and possible issues from ArviZ prereleases users)
-* Correct bugs
-
-##### July 7th - 21st
-
-* Correct bugs
-* Profile memory and cpu usage to identify possible bottlenecks
-* Write a draft of one related section in ArviZ-resources (optional)
-
-### **Final Weeks** (July 22nd - Agust 19th)
-
-##### July 22nd - 4th
-
-* Finish or continue working on any pending task
-* Contribute to a related section in ArviZ-resources
-
-##### July 5th - 19th
-
-* Write GSoC final evaluation
+* T1: Implement and document IC functions
+* T2: Write their tests
+* T3: Write IC examples
+* T4: Guarantee documentation and tests of MCMC diagnostics (and implementation if appliable)
+* T5: Guarantee tests for MCMC diagnostics
+* T6: Guarantee examples  for MCMC diagnostics
+* T7: Check behaviour in a wide range of real cases (extra examples and possible issues from ArviZ prereleases users)
+* T8: Correct bugs
+* T9: Profile memory and cpu usage to identify possible bottlenecks
+* T10: Write a draft of one related section in ArviZ-resources (optional)
+* T11: Finish or continue working on any pending task
+* T12: Write GSoC final evaluation
 
 ### **After GSoC** 
 
-* Finish the still pending goals if any.
-* Contribute solving bugs on the created functions and answering issues about their usage.
+* A1: Finish the still pending goals if any.
+* A2: Contribute solving bugs on the created functions and answering issues about their usage.
 
 ## Why me?
 
