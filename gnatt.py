@@ -2,7 +2,6 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as md
 import matplotlib.patches as mpatch
 import matplotlib.lines as mlines
-
 import pandas as pd
 import numpy as np
 
@@ -10,40 +9,36 @@ def mpl_date(x):
     return md.date2num(pd.to_datetime(x, format='%d-%m-%Y'))
 
 # Define task start and end date
-tasks = {
-    'P1' : ['1-4', '25-4', 1],
-    'P2' : ['1-4', '6-5', 2],
-    'P3' : ['1-4', '6-5', 3],
-    'P4' : ['25-4', '6-5', 1],
-    'P5' : ['6-5', '12-5', 1],
-    'P6' : ['6-5', '19-5', 2],
-    'P7' : ['6-5', '19-5', 3],
-    'T1' : ['19-5', '9-6', 1],
-    'T2' : ['27-5', '9-6', 1],
-    'T3' : ['9-6', '24-6', 1],
-    'T4' : ['9-6', '24-6', 2],
-    'T5' : ['24-6', '6-7', 1],
-    'T6' : ['24-6', '6-7', 2],
-    'T7' : ['24-6', '6-7', 3],
-    'T8' : ['24-6', '30-12', 4],
-    'T9' : ['7-7', '22-7', 1],
-    'T10' : ['22-7', '19-8', 1],
-    'T11' : ['22-7', '30-12', 2],
-    'T12' : ['6-8', '19-8', 1],
-    'A1' : ['19-8', '30-12', 1],
-    'A2' : ['19-8', '30-12', 2],
-}
+tasks = {'P1' : ['1-4', '25-4', 1],
+         'P2' : ['1-4', '6-5', 2],
+         'P3' : ['1-4', '6-5', 3],
+         'P4' : ['25-4', '6-5', 1],
+         'P5' : ['6-5', '12-5', 1],
+         'P6' : ['6-5', '19-5', 2],
+         'P7' : ['6-5', '19-5', 3],
+         'T1' : ['19-5', '9-6', 1],
+         'T2' : ['27-5', '9-6', 1],
+         'T3' : ['9-6', '24-6', 1],
+         'T4' : ['9-6', '24-6', 2],
+         'T5' : ['24-6', '6-7', 1],
+         'T6' : ['24-6', '6-7', 2],
+         'T7' : ['24-6', '6-7', 3],
+         'T8' : ['24-6', '30-12', 4],
+         'T9' : ['7-7', '22-7', 1],
+         'T10' : ['22-7', '19-8', 1],
+         'T11' : ['22-7', '30-12', 2],
+         'T12' : ['6-8', '19-8', 1],
+         'A1' : ['19-8', '30-12', 1],
+         'A2' : ['19-8', '30-12', 2]}
 # define dict with task relations
-dependencies = {
-    'P4' : ['P1', 'P2'],
-    'P7' : ['P4'],
-    'T1' : ['P2', 'P7'],
-    'T2' : ['T1'],
-    'T3' : ['T1'],
-    'T4' : ['P7'],
-    'T5' : ['T4'],
-    'T6' : ['T4'],
-}
+dependencies = {'P4' : ['P1', 'P2'],
+                'P7' : ['P4'],
+                'T1' : ['P2', 'P7'],
+                'T2' : ['T1'],
+                'T3' : ['T1'],
+                'T4' : ['P7'],
+                'T5' : ['T4'],
+                'T6' : ['T4']}
 # Define task dataframe
 df_whole = pd.DataFrame.from_dict(
     tasks,
@@ -68,7 +63,13 @@ mask = end<mpl_date('9-9-2019')
 # Plot
 # Plot rectangular tasks
 fig, ax = plt.subplots(1,1,figsize=(12,7))
-ax.barh(y_values[mask], (end-start)[mask], left=start[mask], align='center',color=colors[mask],edgecolor=None,height=barhwidth)
+ax.barh(y_values[mask], 
+        (end-start)[mask], 
+        left=start[mask], 
+        align='center',
+        color=colors[mask],
+        edgecolor=None,
+        height=barhwidth)
 # Plot arrow tasks
 for task in df.index.values[end>mpl_date('1-11-2019')]:
     mask = df.index==task
