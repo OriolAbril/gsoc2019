@@ -1,10 +1,43 @@
 ## Work done during GSoC
-To see _all_ the work done suring the 2019 GSoC coding period, see this 
+To see all the work done suring the 2019 GSoC coding period, see this 
 [PR list](https://github.com/arviz-devs/arviz/pulls?page=1&q=is%3Apr+author%3AOriolAbril+archived%3Afalse+label%3AGSOC&utf8=%E2%9C%93).
-This list contains all my contributions during GSoC coding period, the most important parts of which are summarized below. 
+This list contains all my contributions during GSoC coding period. Below, these PRs are divided by topics and the most important contributions in each topic are summarized.
 
 ---
 ### Information Criteria
+
+Information criteria allow to evaluate the predictive accuracy of a model. In some cases, this quantity is so 
+relevant to the analysis that it can be used to compare 
+different models and choose the one with the better predictive accuracy. ArviZ has some functions designed to calculate 
+different information criteria (`az.loo` and `az.waic`) and to analyze its results (`az.compare`, `az.plot_compare`, 
+`az.plot_elpd` and `az.plot_khat`). During GSoC, I have modified these functions in order to extend them and ease 
+their interpretation:
+
+* I created a new class `az.ELPDData` designed to store and print in an informative manner the results of information
+criteria. 
+* I modified the computation of information criteria to use internally `az.wrap_xarray_ufunc`. This allows 3 key improvements.
+The first is that there is no longer the need to convert to unlabeled data, therefore pointwise information criteria 
+results are labeled like the rest of the data in InferenceData objects which eases the identification of problematic
+observations. The second is that working with multidimensional data is automatically handled by xarray and the shape of 
+the original object is kept. And the third is that this change allows easy parallelization of the calculations using 
+dask via xarray. 
+* This previous change also defines by convenience ArviZ's default shapes and dimension names. InferenceData objects 
+generally contain first the `chain` dimension followed by the `draw` dimension and then any number of dimensions depending
+on the variable shape. In some cases, we want to combine all chains into a single array; in ArviZ this should be 
+done with xarray's `stack(sample=("chain", "draw"))`. This combines the `chain` and the `draw` dimension to a single 
+dimension called `sample` which is placed as the last dimension, leaving an object with first the variable shape and then 
+the `sample` shape. 
+* I created the `az.plot_elpd` in order to compare pointwise information criteria values of several models, with 
+coloring based on label values and non-degenerate pairwise plots to compare more than two models at once.
+* I added many customization options to `az.plot_khat` like coloring based on labels, a summary of the quality of khat 
+values and showing the labels of each observation when hovering over. 
+* I created a context manager `az.interactive_backend` to allow temporal change of matplotlib backend between the ususal inline backend used in jupyter notebooks, jupyter lab or spyder and any of the supported interactive backends.
+* I also extended the tests of information criteria functions to have their behaviour checked on multidimensional objects (`chain`, `draw` and at least 2 more dimensions).
+* I have also started working on sampling wrappers in order to allow ArviZ to refit the same model on different sets of data.
+As ArviZ has no sampling capabilities and it is backend agnostic, this wrappers allow it to perform refits and to do them 
+using any backend available like PyStan or emcee. At the time of writing, working sampling wrappers for PyStan and emcee 
+have been already written. PyMC3 wrappers cannot work yet until this [PyMC3 issue](https://github.com/pymc-devs/pymc3/issues/3007) is fixed. The PR implementing this is still unmerged as it also depends on the changes on InferenceData scheme.
+
 
 #### PRs in this caterory
 * [#678](https://github.com/arviz-devs/arviz/pull/678): +809 −102
