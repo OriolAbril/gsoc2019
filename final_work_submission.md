@@ -1,6 +1,4 @@
-# Final Work Submission
-
-# Work done during GSoC
+## Work done during GSoC
 To see _all_ the work done suring the 2019 GSoC coding period, see this 
 [PR list](https://github.com/arviz-devs/arviz/pulls?page=1&q=is%3Apr+author%3AOriolAbril+archived%3Afalse+label%3AGSOC&utf8=%E2%9C%93).
 This list contains all my contributions during GSoC coding period, the most important parts of which are summarized below. 
@@ -17,8 +15,9 @@ This list contains all my contributions during GSoC coding period, the most impo
 * [#755](https://github.com/arviz-devs/arviz/pull/755): +224 −143
 * [#764](https://github.com/arviz-devs/arviz/pull/764): +6 −0
 * [#771](https://github.com/arviz-devs/arviz/pull/771) [UNMERGED]: +844 −0
+* [#790](https://github.com/arviz-devs/arviz/pull/790) (fix for #678): +24 −24
 
-Total: +2331 -306
+Total lines of code added/removed from ArviZ for this section: +2356 -330
 
 ---
 ### Convergence Assessment
@@ -28,7 +27,7 @@ Total: +2331 -306
 * [#724](https://github.com/arviz-devs/arviz/pull/724): +397 −37
 * [#778](https://github.com/arviz-devs/arviz/pull/778) (bugfix for both #708 and #724): +4 −2
 
-Total: +806 -39
+Total lines of code added/removed from ArviZ for this section: +806 -39
 
 ---
 ### Model Checking
@@ -38,7 +37,7 @@ Total: +806 -39
 * [#738](https://github.com/arviz-devs/arviz/pull/738) (documentation bugfix for #696): +2 −2
 * [#781](https://github.com/arviz-devs/arviz/pull/781): +52 −4
 
-Total: +891 -30
+Total lines of code added/removed from ArviZ for this section: +891 -30
 
 ---
 ### InferenceData scheme modifications
@@ -50,16 +49,16 @@ Total: +891 -30
 * [#739](https://github.com/arviz-devs/arviz/pull/739): +101 −9
 * [#794](https://github.com/arviz-devs/arviz/pull/794) [UNMERGED]: +533 −291
 
-Total: +730 -340
+Total lines of code added/removed from ArviZ for this section: +730 -340
 
 ---
 ### Global parameters
 
 #### PRs in this caterory
 * [#734](https://github.com/arviz-devs/arviz/pull/734): +374 −20
-* [#787](https://github.com/arviz-devs/arviz/pull/787) [UNMERGED]: +208 −37
+* [#787](https://github.com/arviz-devs/arviz/pull/787): +208 −37
 
-Total: +582 -57
+Total lines of code added/removed from ArviZ for this section: +582 -57
 
 ---
 
@@ -77,6 +76,6 @@ Total: +582 -57
 * [#779](https://github.com/arviz-devs/arviz/pull/779): +15 −1
 * [#788](https://github.com/arviz-devs/arviz/pull/788) [UNMERGED]: +3 −2
 
-Total: +266 -98
+Total lines of code added/removed from ArviZ for this section: +266 -98
 
 
