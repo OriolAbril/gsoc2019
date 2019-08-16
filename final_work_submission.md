@@ -59,6 +59,21 @@ Total lines of code added/removed from ArviZ for this section: +2356 -330
 ---
 ### Convergence Assessment
 
+Bayesian Inference generally relies on Markov-Chain Monte Carlo samplers to aproximate numerically the posterior distributions
+of interest. These methods converge to the real posterior when the number of samples tends to infinite. Thus, in all real cases 
+there is no guarantee (and there cannot be) that the approximated posterior is a good aproximation. Convergence assesment 
+algorithms try to palliate this issue by detecting bad approximations; they cannot guarantee convergence but in many cases 
+they can guarantee that the MCMC has not converged which is quite an improvement. ArviZ has several diagnostic functions which
+serve this convergence assesment purpose. Here, I have basically added some new diagnostic plots following Vehtari et al 2019.
+
+* I added `plot_ess` which prodices three different kinds of plot. The two first kinds `local` and `quantile` are used to check
+that the MCMC has properly sampled all the parameter space; undersampling of some region indicates convergence issues. In 
+these two kinds, `plot_ess` allows to customize the appearance of the plot, to show rug values for any variable in 
+`sample_stats` or to compare the plotted values with the `mean` and `sd` effective sample. The third kind plots the evolution 
+of the effective sample size which should be roughly linear. 
+* I added `plot_mcse` to plot the `local` or `quantile` Monte Carlo standard error either as a scatter plot or as errorbars
+on the parameter values. Both kinds allow similar options to `plot_ess` to customize appearence, compare with `mean` and `sd` MCSE...
+
 #### PRs in this caterory
 * [#708](https://github.com/arviz-devs/arviz/pull/708): +405 −0
 * [#724](https://github.com/arviz-devs/arviz/pull/724): +397 −37
@@ -68,6 +83,11 @@ Total lines of code added/removed from ArviZ for this section: +806 -39
 
 ---
 ### Model Checking
+
+In Bayesian modeling, observations are considered random variables defined by the model and some parameters. This allows
+us to calculate the best fit parameters and its uncertainty and then use them to predict possible future realizations.
+However, we should also check whether or not this model of random variables generates samples compatible with the observations.
+This can help in detecting model limitations and finding ways to improve it. 
 
 #### PRs in this caterory
 * [#696](https://github.com/arviz-devs/arviz/pull/696): +837 −24
