@@ -37,6 +37,10 @@ values and showing the labels of each observation when hovering over.
 As ArviZ has no sampling capabilities and it is backend agnostic, this wrappers allow it to perform refits and to do them 
 using any backend available like PyStan or emcee. At the time of writing, working sampling wrappers for PyStan and emcee 
 have been already written. PyMC3 wrappers cannot work yet until this [PyMC3 issue](https://github.com/pymc-devs/pymc3/issues/3007) is fixed. The PR implementing this is still unmerged as it also depends on the changes on InferenceData scheme.
+* In parallel to the sampling wrappers, I have also written a port to ArviZ of the reloo function of the brms R package. 
+This function uses the sampling wrappers to calculate exact cross validation values for problematic observations where 
+numerical approximations do not work. After GSoC, I also plan on implementing a numerical approximation of the 
+leave-future-out cross validation that also needs to perform some refits of the model.
 
 
 #### PRs in this caterory
