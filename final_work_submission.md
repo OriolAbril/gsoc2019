@@ -1,7 +1,15 @@
 ## Work done during GSoC
 To see all the work done suring the 2019 GSoC coding period, see this 
 [pull request (PR) list](https://github.com/arviz-devs/arviz/pulls?page=1&q=is%3Apr+author%3AOriolAbril+archived%3Afalse+label%3AGSOC&utf8=%E2%9C%93).
-This list contains all my contributions during GSoC coding period. Below, these PRs are divided by topics and the most important contributions in each topic are summarized.
+This document contains all my contributions during GSoC coding period. Below, these PRs are divided by category and 
+the most important contributions in each topic are summarized. These are the different categories into which I divided the PRs:
+
+1. [Information Criteria](#information-criteria)
+1. [Convergence Assessment](#convergence-assessment)
+1. [Model Checking](#model-checking)
+1. [InferenceData scheme modifications](#inferencedata-scheme-modifications)
+1. [Global parameters](#global-parameters)
+1. [Other Pull Requests](#other-pull-requests)
 
 ---
 ### Information Criteria
@@ -176,7 +184,7 @@ Total lines of code added/removed from ArviZ for this section: +582 -57
 
 ---
 
-### Other PRs
+### Other Pull Requests
 
 Contributing to a software package is not only implementing new functions and documenting them. It is strongly 
 recommended to implement continuous integration builds to test everything is working properly after every single 
