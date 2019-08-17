@@ -2,7 +2,9 @@
 To see all the work done suring the 2019 GSoC coding period, see this 
 [pull request (PR) list](https://github.com/arviz-devs/arviz/pulls?page=1&q=is%3Apr+author%3AOriolAbril+archived%3Afalse+label%3AGSOC&utf8=%E2%9C%93).
 This document contains all my contributions during GSoC coding period. Below, these PRs are divided by category and 
-the most important contributions in each topic are summarized. These are the different categories into which I divided the PRs:
+the most important contributions in each topic are summarized. To read more details on the new or modified functions, 
+see [ArviZ docs](https://arviz-devs.github.io/arviz/index.html). These are the different categories into which PRs have 
+been divided:
 
 1. [Information Criteria](#information-criteria)
 1. [Convergence Assessment](#convergence-assessment)
@@ -18,12 +20,12 @@ Information criteria allow to evaluate the predictive accuracy of a model. In so
 relevant to the analysis that it can be used to compare 
 different models and choose the one with the better predictive accuracy. ArviZ has some functions designed to calculate 
 different information criteria (`az.loo` and `az.waic`) and to analyze its results (`az.compare`, `az.plot_compare`, 
-`az.plot_elpd` and `az.plot_khat`). During GSoC, I have modified these functions in order to extend them and ease 
+`az.plot_elpd` and `az.plot_khat`). During GSoC, these functions have been modified in order to extend them and ease 
 their interpretation:
 
-* I created a new class `az.ELPDData` designed to store and print in an informative manner the results of information
-criteria. 
-* I modified the computation of information criteria to use internally `az.wrap_xarray_ufunc`. This allows 3 key improvements.
+* A new class `az.ELPDData` was created. It is designed to store and print in an informative manner information criteria
+results. 
+* The computation of information criteria was modified to use internally `az.wrap_xarray_ufunc`. This allows 3 key improvements.
 The first is that there is no longer the need to convert to unlabeled data, therefore pointwise information criteria 
 results are labeled like the rest of the data in InferenceData objects which eases the identification of problematic
 observations. The second is that working with multidimensional data is automatically handled by xarray and the shape of 
@@ -35,20 +37,21 @@ on the variable shape. In some cases, we want to combine all chains into a singl
 done with xarray's `stack(sample=("chain", "draw"))`. This combines the `chain` and the `draw` dimension to a single 
 dimension called `sample` which is placed as the last dimension, leaving an object with first the variable shape and then 
 the `sample` shape. 
-* I created the `az.plot_elpd` in order to compare pointwise information criteria values of several models, with 
-coloring based on label values and non-degenerate pairwise plots to compare more than two models at once.
-* I added many customization options to `az.plot_khat` like coloring based on labels, a summary of the quality of khat 
-values and showing the labels of each observation when hovering over. 
-* I created a context manager `az.interactive_backend` to allow temporal change of matplotlib backend between the ususal inline backend used in jupyter notebooks, jupyter lab or spyder and any of the supported interactive backends.
-* I also extended the tests of information criteria functions to have their behaviour checked on multidimensional objects (`chain`, `draw` and at least 2 more dimensions).
-* I have also started working on sampling wrappers in order to allow ArviZ to refit the same model on different sets of data.
+* A new plotting function `az.plot_elpd` was created in order to compare pointwise information criteria values 
+of several models. Some of its options include coloring based on label values and non-degenerate pairwise 
+plots to compare more than two models at once.
+* Many new customization options were added to `az.plot_khat`. Some examples are coloring based on labels, a 
+summary of the quality of khat values and showing the labels of each observation when hovering over. 
+* The context manager `az.interactive_backend` was created to allow temporal change of matplotlib backend between the 
+ususal inline backend used in jupyter notebooks, jupyter lab or spyder and any of the supported interactive backends.
+* Tests of information criteria functions were extended. Now, the behaviour of these functions is also tested on 
+multidimensional objects (`chain`, `draw` and at least 2 more dimensions).
+* Work on sampling wrappers was started in order to allow ArviZ to refit the same model on different sets of data.
 As ArviZ has no sampling capabilities and it is backend agnostic, this wrappers allow it to perform refits and to do them 
 using any backend available like PyStan or emcee. At the time of writing, working sampling wrappers for PyStan and emcee 
 have been already written. PyMC3 wrappers cannot work yet until this [PyMC3 issue](https://github.com/pymc-devs/pymc3/issues/3007) is fixed. The PR implementing this is still unmerged as it also depends on the changes on InferenceData scheme.
-* In parallel to the sampling wrappers, I have also written a port to ArviZ of the reloo function of the brms R package. 
-This function uses the sampling wrappers to calculate exact cross validation values for problematic observations where 
-numerical approximations do not work. After GSoC, I also plan on implementing a numerical approximation of the 
-leave-future-out cross validation that also needs to perform some refits of the model.
+* In parallel to the sampling wrappers, an ArviZ port of the [brms](https://github.com/paul-buerkner/brms) 
+reloo function was also written. This function uses the sampling wrappers to calculate exact cross validation values for problematic observations where numerical approximations do not work. After GSoC, we also plan on implementing a numerical approximation of the leave-future-out cross validation (which also needs to perform some refits of the model).
 
 
 #### PRs in this caterory
@@ -72,15 +75,17 @@ of interest. These methods converge to the real posterior when the number of sam
 there is no guarantee (and there cannot be) that the approximated posterior is a good aproximation. Convergence assesment 
 algorithms try to palliate this issue by detecting bad approximations; they cannot guarantee convergence but in many cases 
 they can guarantee that the MCMC has not converged which is quite an improvement. ArviZ has several diagnostic functions which
-serve this convergence assesment purpose. Here, I have basically added some new diagnostic plots following Vehtari et al 2019.
+serve this convergence assesment purpose. Work on this section was basically to add some new diagnostic plots following 
+[Vehtari et al 2019](https://arxiv.org/abs/1903.08008).
 
-* I added `plot_ess` which prodices three different kinds of plot. The two first kinds `local` and `quantile` are used to check
-that the MCMC has properly sampled all the parameter space; undersampling of some region indicates convergence issues. In 
-these two kinds, `plot_ess` allows to customize the appearance of the plot, to show rug values for any variable in 
-`sample_stats` or to compare the plotted values with the `mean` and `sd` effective sample. The third kind plots the evolution 
-of the effective sample size which should be roughly linear. 
-* I added `plot_mcse` to plot the `local` or `quantile` Monte Carlo standard error either as a scatter plot or as errorbars
-on the parameter values. Both kinds allow similar options to `plot_ess` to customize appearence, compare with `mean` and `sd` MCSE...
+* New plotting function `plot_ess` was created. It produces three different kinds of plot. The two first kinds `local` and
+`quantile` are used to check that the MCMC has properly sampled all the parameter space; undersampling of some 
+region indicates convergence issues. In these two kinds, `plot_ess` allows to customize the appearance of the plot,
+to show rug values for any variable in `sample_stats` or to compare the plotted values with the `mean` and `sd` 
+effective sample. The third kind plots the evolution of the effective sample size which should be roughly linear. 
+* Another plotting function `plot_mcse` was also added to ArviZ. It plots the `local` or `quantile` Monte Carlo 
+standard error either as a scatter plot or as errorbars on the parameter values. Both kinds allow similar options 
+to `plot_ess` such as customizing appearence or comparing with `mean` and `sd` MCSE.
 
 #### PRs in this caterory
 * [#708](https://github.com/arviz-devs/arviz/pull/708): +405 −0
@@ -97,19 +102,22 @@ us to calculate the best fit parameters and its uncertainty and then use them to
 However, we should also check whether or not this model of random variables generates samples compatible with the observations.
 This can help in detecting model limitations and finding ways to improve it. One of the algorithms available for model 
 checking is Leave-One-Out Probability Integral Transform (LOO-PIT) which also adds concepts from cross validation to model
-checking. I added this algorithm to ArviZ along with plots to interpretate it.
+checking. This algorithm was added to ArviZ along with plots to interpretate it.
 
-* I implemented the calculation of LOO-PIT values in ArviZ using `az.loo_pit`. This function is extremely versatile and 
-allows to combine data form InferenceData objects with array or DataArray inputs. As LOO-PIT uses also concepts from LOO 
-information criterion, the same defaults for dimension order and names are used.
-* I created `az.plot_loo_pit` to plot and interpretate LOO-PIT values. It has two ways of showing LOO-PIT values, either 
-plotting its kernel density estimate or plotting the difference between the empirical cumulative density function of 
-LOO-PIT values and the exact cumulative density function of a uniform random variable.
-* I also created `az.apply_test_function` which eases the application of Bayesian test functions on InferenceData objects.
-This function however, as its docs explain, is generally slower than using xarray or numpy vectorized calculations. This 
-function is still relevant and useful for two main reasons. The first is because it also uses `wrap_xarray_ufunc` and can
-then ease parallelization of test functions calculations. The second reason is that having this function in ArviZ docs is 
-a reminder that test functions can be useful by themselves and that any test function can be used to perform LOO-PIT checks
+* Calculation of LOO-PIT values was implemented in ArviZ using new stats function `az.loo_pit`. This function is 
+extremely versatile and allows to combine data form InferenceData objects with array or DataArray inputs. 
+As LOO-PIT uses also concepts from LOO information criterion, the defaults used for dimension order and names are the 
+ones defined by the work in information criteria section.
+* A new plotting function `az.plot_loo_pit` was also added to plot and interpretate LOO-PIT values. It has two 
+ways of showing LOO-PIT values, either plotting its kernel density estimate or plotting the difference between 
+the empirical cumulative density function of LOO-PIT values and the exact cumulative density function of a 
+uniform random variable.
+* Another stats function `az.apply_test_function` which eases the application of Bayesian test functions on 
+InferenceData objects was also written. This function however, as its docs explain, is generally slower than 
+using xarray or numpy vectorized calculations. This function is still relevant and useful for two main reasons. 
+The first is because it also uses `wrap_xarray_ufunc` and can then ease parallelization of test functions 
+calculations. The second reason is that having this function in ArviZ docs is a reminder that test functions can be 
+useful by themselves and that any test function can be used to perform LOO-PIT checks
 on its results (see [this thread](https://discourse.mc-stan.org/t/loo-pit-algorithm-applicability/9245) for details).
 
 #### PRs in this caterory
@@ -124,21 +132,24 @@ Total lines of code added/removed from ArviZ for this section: +891 -30
 
 InferenceData objects are one key aspect of ArviZ. They provide a unified data scheme to store Bayesian inference
 results from any library. They can contain the posterior, prior, prior predictive and posterior predictive samples
-along with sample stats and observed data in a single object. Due to the large number of new functionalities I have 
-just described in the previous three sections, we also found convenient to update the data scheme of InferenceData objects.
+along with sample stats and observed data in a single object. Due to the large number of new functionalities 
+described in the previous three sections, we also found convenient to update the data scheme of InferenceData objects.
 
-* I modified how posterior predictive samples are retrieved from PyMC3 so that whenever possible they are reshaped
-into ArviZ default shape `chain, draw, *shape`. Moreover, when the shape of the posterior predictive does not match 
-the posterior shape, a warning is printed to warn the user that the posterior predictive samples may omit whole chains.
-* I updated the `centered_eight` and `non_centered_eight` ArviZ example datasets so that their posterior predictive 
-shape matched their prior shape.
-* I added a `del` method to InferenceData objects so that groups can be deleted. 
-* I added a `constant_data` group to store constants of the model in addition to the observed data which was already 
-stored in `observed_data` group. This changes are still unmerged.
-* I added a `log_likelihoods` group in order to support multiple log likelihoods to be stored in a single InferenceData 
-object. This new group is intended to store all log likelihood data and the model log probability (named `lp`). Previously,
-this data was stored in `sample_stats` group and only one log likelihood could be stored. I have
-already updated `from_dict`, `from_emcee`, `from_pymc3` and `from_pystan` but the changes are still unmerged.
+*  Handling of posterior predictive samples in `from_pymc3` was modified so that whenever possible posterior predictive
+samples are reshaped into ArviZ default shape `chain, draw, *shape`. Moreover, when the shape of the posterior 
+predictive does not match the posterior shape, a warning is printed to warn the user that the posterior 
+predictive samples may omit whole chains.
+* ArviZ example datasets `centered_eight` and `non_centered_eight` were updated. Now their posterior predictive 
+shape matches their prior shape.
+* A `del` method was added to InferenceData objects so that groups can be deleted. 
+* A new group `constant_data` was added to InferenceData functions. It stores constants of the model in 
+addition to the observed data which was already stored in `observed_data` group. This change is still unmerged.
+* Another new group was added to InferenceData objects: `log_likelihoods` group which makes ArviZ start supporting
+multiple log likelihoods to be stored in a single InferenceData object. This new group is intended to store all 
+log likelihood data (preferably named like the variable in observed data it refers to) and the model log 
+probability (named `lp`). Previously, this data was stored in `sample_stats` group and only one log likelihood 
+could be stored. `from_dict`, `from_emcee`, `from_pymc3` and `from_pystan` have already been updated but the changes
+are still unmerged.
 
 #### PRs in this caterory
 * [#702](https://github.com/arviz-devs/arviz/pull/702): +70 −17
@@ -156,10 +167,10 @@ ArviZ functions allow a great deal of custoization but are still simple to use. 
 arguments in ArviZ functions each of which must have a default. Many of these defaults are shared between several
 functions. This forces users to change the default explicitely on a function basis instead of giving an option to change 
 the default globally like matplotlib for example. Before the number of functions continues increasing making every time
-more difficult to create a way of handling global options I decided to follow matplotlibs `rcParams` to implement 
+more difficult to create a way of handling global options it was decided to follow matplotlibs `rcParams` to implement 
 an ArviZ's `rcParams` version.
 
-* I created a class following matplotlib's example to handle global options, `az.rcParams`. This class checks for an
+* A new class to handle global options was created following matplotlib's example. This `az.rcParams` class checks for an
 `arvizrc` in several locations in order to load the defaults defined there; otherwise, the defaults defined in `rcparams.py`
 are used. `az.rcParams` keys cannot be modified and when modifying the value of a parameter, this value is first validated. 
 This two properties are key to prevent errors when functions use this `az.rcParams`. At the date of writing, 3 global 
@@ -173,8 +184,8 @@ To see other parameters on the roadmap or how to add a new parameter see
   * `plot.max_subplots`: defines the maximum number of subplots ArviZ can add to a single figure. This prevents users to 
   inadvertedly call a plotting function on too many variables which would hang up its computer.
   * `stats.information_criterion`: sets the default information criterion between `waic` and `loo`.
-* I created a context manager `az.rc_context` to temporarily change ArviZ defaults. It allows a dictionary as input or a 
-file from which to read the temporal defaults.
+* A context manager, `az.rc_context`, was also added in order to temporarily change ArviZ defaults. 
+It allows either a dictionary or a file from which to read the temporal defaults as an input.
 
 #### PRs in this caterory
 * [#734](https://github.com/arviz-devs/arviz/pull/734): +374 −20
@@ -190,11 +201,13 @@ Contributing to a software package is not only implementing new functions and do
 recommended to implement continuous integration builds to test everything is working properly after every single 
 change in the code. These test must also be maintained as they may break for external causes like a dependency 
 changing its API. Documentation must also be kept up to date when functions are removed. Issues posted by users should
-also be addressed and so on. During my GSoC project I also worked on some of this aspects of maintaining ArviZ. 
-When looking at the number of PR in this category in this section it may seem that I spent a lot of time on this 
-which is not really the case. I also included the lines of code to show that all PRs in this category are small
-and quite simple. I do not include a changelog summary as these PRs share no common topic and they change only 
-one or two things, thus, looking at their description is enough to see what was changed or fixed.
+also be addressed and so on. During my GSoC project, a small part of my work hours were dedicated to some of this 
+ArviZ maintainment tasks. 
+When looking at the number of PR in this category in this section it may seem that a lot of time was spent on this 
+but that is not really the case. The lines of code have been included in all sections to show that all PRs in 
+this category are small and quite simple. There is no changelog summary for this section as these PRs share no common 
+topic and they change only one or two things, thus, looking at their description is enough to see what was 
+changed or fixed.
 
 * [#714](https://github.com/arviz-devs/arviz/pull/714): +1 −1
 * [#723](https://github.com/arviz-devs/arviz/pull/723): +72 −17
