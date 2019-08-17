@@ -1,6 +1,6 @@
 ## Work done during GSoC
 To see all the work done suring the 2019 GSoC coding period, see this 
-[PR list](https://github.com/arviz-devs/arviz/pulls?page=1&q=is%3Apr+author%3AOriolAbril+archived%3Afalse+label%3AGSOC&utf8=%E2%9C%93).
+[pull request (PR) list](https://github.com/arviz-devs/arviz/pulls?page=1&q=is%3Apr+author%3AOriolAbril+archived%3Afalse+label%3AGSOC&utf8=%E2%9C%93).
 This list contains all my contributions during GSoC coding period. Below, these PRs are divided by topics and the most important contributions in each topic are summarized.
 
 ---
@@ -114,6 +114,24 @@ Total lines of code added/removed from ArviZ for this section: +891 -30
 ---
 ### InferenceData scheme modifications
 
+InferenceData objects are one key aspect of ArviZ. They provide a unified data scheme to store Bayesian inference
+results from any library. They can contain the posterior, prior, prior predictive and posterior predictive samples
+along with sample stats and observed data in a single object. Due to the large number of new functionalities I have 
+just described in the previous three sections, we also found convenient to update the data scheme of InferenceData objects.
+
+* I modified how posterior predictive samples are retrieved from PyMC3 so that whenever possible they are reshaped
+into ArviZ default shape `chain, draw, *shape`. Moreover, when the shape of the posterior predictive does not match 
+the posterior shape, a warning is printed to warn the user that the posterior predictive samples may omit whole chains.
+* I updated the `centered_eight` and `non_centered_eight` ArviZ example datasets so that their posterior predictive 
+shape matched their prior shape.
+* I added a `del` method to InferenceData objects so that groups can be deleted. 
+* I added a `constant_data` group to store constants of the model in addition to the observed data which was already 
+stored in `observed_data` group. This changes are still unmerged.
+* I added a `log_likelihoods` group in order to support multiple log likelihoods to be stored in a single InferenceData 
+object. This new group is intended to store all log likelihood data and the model log probability (named `lp`). Previously,
+this data was stored in `sample_stats` group and only one log likelihood could be stored. I have
+already updated `from_dict`, `from_emcee`, `from_pymc3` and `from_pystan` but the changes are still unmerged.
+
 #### PRs in this caterory
 * [#702](https://github.com/arviz-devs/arviz/pull/702): +70 −17
 * [#715](https://github.com/arviz-devs/arviz/pull/715): +24 −19
@@ -126,6 +144,30 @@ Total lines of code added/removed from ArviZ for this section: +730 -340
 ---
 ### Global parameters
 
+ArviZ functions allow a great deal of custoization but are still simple to use. This is achieved by using extensive optional
+arguments in ArviZ functions each of which must have a default. Many of these defaults are shared between several
+functions. This forces users to change the default explicitely on a function basis instead of giving an option to change 
+the default globally like matplotlib for example. Before the number of functions continues increasing making every time
+more difficult to create a way of handling global options I decided to follow matplotlibs `rcParams` to implement 
+an ArviZ's `rcParams` version.
+
+* I created a class following matplotlib's example to handle global options, `az.rcParams`. This class checks for an
+`arvizrc` in several locations in order to load the defaults defined there; otherwise, the defaults defined in `rcparams.py`
+are used. `az.rcParams` keys cannot be modified and when modifying the value of a parameter, this value is first validated. 
+This two properties are key to prevent errors when functions use this `az.rcParams`. At the date of writing, 3 global 
+parameters have been integrated in ArviZ which will be described below. To see an always up to date list of all global
+parameters in ArviZ check [`arvizrc.template`](https://github.com/arviz-devs/arviz/blob/master/arvizrc.template). 
+To see other parameters on the roadmap or how to add a new parameter see 
+[this issue](https://github.com/arviz-devs/arviz/issues/792)).
+  * `data.load`: this parameter defined how is data loaded when using `from_netcdf` methods. It accepts two values: `lazy` 
+  to lazyly load the data using xarray and read it from disk when needed for calculations or `eager` in order to load 
+  the data into memory the moment the file is read.
+  * `plot.max_subplots`: defines the maximum number of subplots ArviZ can add to a single figure. This prevents users to 
+  inadvertedly call a plotting function on too many variables which would hang up its computer.
+  * `stats.information_criterion`: sets the default information criterion between `waic` and `loo`.
+* I created a context manager `az.rc_context` to temporarily change ArviZ defaults. It allows a dictionary as input or a 
+file from which to read the temporal defaults.
+
 #### PRs in this caterory
 * [#734](https://github.com/arviz-devs/arviz/pull/734): +374 −20
 * [#787](https://github.com/arviz-devs/arviz/pull/787): +208 −37
@@ -135,6 +177,16 @@ Total lines of code added/removed from ArviZ for this section: +582 -57
 ---
 
 ### Other PRs
+
+Contributing to a software package is not only implementing new functions and documenting them. It is strongly 
+recommended to implement continuous integration builds to test everything is working properly after every single 
+change in the code. These test must also be maintained as they may break for external causes like a dependency 
+changing its API. Documentation must also be kept up to date when functions are removed. Issues posted by users should
+also be addressed and so on. During my GSoC project I also worked on some of this aspects of maintaining ArviZ. 
+When looking at the number of PR in this category in this section it may seem that I spent a lot of time on this 
+which is not really the case. I also included the lines of code to show that all PRs in this category are small
+and quite simple. I do not include a changelog summary as these PRs share no common topic and they change only 
+one or two things, thus, looking at their description is enough to see what was changed or fixed.
 
 * [#714](https://github.com/arviz-devs/arviz/pull/714): +1 −1
 * [#723](https://github.com/arviz-devs/arviz/pull/723): +72 −17
@@ -146,7 +198,7 @@ Total lines of code added/removed from ArviZ for this section: +582 -57
 * [#773](https://github.com/arviz-devs/arviz/pull/773): +63 −28
 * [#776](https://github.com/arviz-devs/arviz/pull/776): +0 −1
 * [#779](https://github.com/arviz-devs/arviz/pull/779): +15 −1
-* [#788](https://github.com/arviz-devs/arviz/pull/788) [UNMERGED]: +3 −2
+* [#788](https://github.com/arviz-devs/arviz/pull/788): +3 −2
 
 Total lines of code added/removed from ArviZ for this section: +266 -98
 
