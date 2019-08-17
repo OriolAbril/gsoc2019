@@ -87,7 +87,22 @@ Total lines of code added/removed from ArviZ for this section: +806 -39
 In Bayesian modeling, observations are considered random variables defined by the model and some parameters. This allows
 us to calculate the best fit parameters and its uncertainty and then use them to predict possible future realizations.
 However, we should also check whether or not this model of random variables generates samples compatible with the observations.
-This can help in detecting model limitations and finding ways to improve it. 
+This can help in detecting model limitations and finding ways to improve it. One of the algorithms available for model 
+checking is Leave-One-Out Probability Integral Transform (LOO-PIT) which also adds concepts from cross validation to model
+checking. I added this algorithm to ArviZ along with plots to interpretate it.
+
+* I implemented the calculation of LOO-PIT values in ArviZ using `az.loo_pit`. This function is extremely versatile and 
+allows to combine data form InferenceData objects with array or DataArray inputs. As LOO-PIT uses also concepts from LOO 
+information criterion, the same defaults for dimension order and names are used.
+* I created `az.plot_loo_pit` to plot and interpretate LOO-PIT values. It has two ways of showing LOO-PIT values, either 
+plotting its kernel density estimate or plotting the difference between the empirical cumulative density function of 
+LOO-PIT values and the exact cumulative density function of a uniform random variable.
+* I also created `az.apply_test_function` which eases the application of Bayesian test functions on InferenceData objects.
+This function however, as its docs explain, is generally slower than using xarray or numpy vectorized calculations. This 
+function is still relevant and useful for two main reasons. The first is because it also uses `wrap_xarray_ufunc` and can
+then ease parallelization of test functions calculations. The second reason is that having this function in ArviZ docs is 
+a reminder that test functions can be useful by themselves and that any test function can be used to perform LOO-PIT checks
+on its results (see [this thread](https://discourse.mc-stan.org/t/loo-pit-algorithm-applicability/9245) for details).
 
 #### PRs in this caterory
 * [#696](https://github.com/arviz-devs/arviz/pull/696): +837 −24
