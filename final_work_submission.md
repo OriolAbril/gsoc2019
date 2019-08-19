@@ -3,7 +3,8 @@ To see all the work done suring the 2019 GSoC coding period, see this
 [pull request (PR) list](https://github.com/arviz-devs/arviz/pulls?page=1&q=is%3Apr+author%3AOriolAbril+archived%3Afalse+label%3AGSOC&utf8=%E2%9C%93).
 This document contains all my contributions during GSoC coding period. Below, these PRs are divided by category and 
 the most important contributions in each topic are summarized. To read more details on the new or modified functions, 
-see [ArviZ docs](https://arviz-devs.github.io/arviz/index.html). These are the different categories into which PRs have 
+see [ArviZ docs](https://arviz-devs.github.io/arviz/index.html), moreover, a direct link to each new or modified function is 
+available in its changelog summary. These are the different categories into which PRs have 
 been divided:
 
 1. [Information Criteria](#information-criteria)
@@ -24,7 +25,8 @@ different information criteria (`az.loo` and `az.waic`) and to analyze its resul
 their interpretation:
 
 * A new class `az.ELPDData` was created. It is designed to store and print in an informative manner information criteria
-results. 
+results. See the docs on [`az.loo`](https://arviz-devs.github.io/arviz/generated/arviz.loo.html#arviz.loo) and
+[`az.waic`](https://arviz-devs.github.io/arviz/generated/arviz.waic.html#arviz.waic) for examples. 
 * The computation of information criteria was modified to use internally `az.wrap_xarray_ufunc`. This allows 3 key improvements.
 The first is that there is no longer the need to convert to unlabeled data, therefore pointwise information criteria 
 results are labeled like the rest of the data in InferenceData objects which eases the identification of problematic
@@ -37,21 +39,31 @@ on the variable shape. In some cases, we want to combine all chains into a singl
 done with xarray's `stack(sample=("chain", "draw"))`. This combines the `chain` and the `draw` dimension to a single 
 dimension called `sample` which is placed as the last dimension, leaving an object with first the variable shape and then 
 the `sample` shape. 
-* A new plotting function `az.plot_elpd` was created in order to compare pointwise information criteria values 
+* A new plotting function [`az.plot_elpd`](https://arviz-devs.github.io/arviz/generated/arviz.plot_elpd.html#arviz.plot_elpd)
+was created in order to compare pointwise information criteria values 
 of several models. Some of its options include coloring based on label values and non-degenerate pairwise 
 plots to compare more than two models at once.
-* Many new customization options were added to `az.plot_khat`. Some examples are coloring based on labels, a 
+* Many new customization options were added to 
+[`az.plot_khat`](https://arviz-devs.github.io/arviz/generated/arviz.plot_khat.html#arviz.plot_khat). 
+Some examples are coloring based on labels, a 
 summary of the quality of khat values and showing the labels of each observation when hovering over. 
-* The context manager `az.interactive_backend` was created to allow temporal change of matplotlib backend between the 
+* The context manager 
+[`az.interactive_backend`](https://arviz-devs.github.io/arviz/generated/arviz.interactive_backend.html#arviz.interactive_backend) 
+was created to allow temporal change of matplotlib backend between the 
 ususal inline backend used in jupyter notebooks, jupyter lab or spyder and any of the supported interactive backends.
 * Tests of information criteria functions were extended. Now, the behaviour of these functions is also tested on 
 multidimensional objects (`chain`, `draw` and at least 2 more dimensions).
-* Work on sampling wrappers was started in order to allow ArviZ to refit the same model on different sets of data.
+* Work on [sampling wrappers](https://github.com/arviz-devs/arviz/pull/771) 
+was started in order to allow ArviZ to refit the same model on different sets of data.
 As ArviZ has no sampling capabilities and it is backend agnostic, this wrappers allow it to perform refits and to do them 
 using any backend available like PyStan or emcee. At the time of writing, working sampling wrappers for PyStan and emcee 
-have been already written. PyMC3 wrappers cannot work yet until this [PyMC3 issue](https://github.com/pymc-devs/pymc3/issues/3007) is fixed. The PR implementing this is still unmerged as it also depends on the changes on InferenceData scheme.
+have already been written. PyMC3 wrappers cannot work yet until this 
+[PyMC3 issue](https://github.com/pymc-devs/pymc3/issues/3007) is fixed. The PR implementing this is still 
+unmerged as it also depends on the changes on InferenceData scheme.
 * In parallel to the sampling wrappers, an ArviZ port of the [brms](https://github.com/paul-buerkner/brms) 
-reloo function was also written. This function uses the sampling wrappers to calculate exact cross validation values for problematic observations where numerical approximations do not work. After GSoC, we also plan on implementing a numerical approximation of the leave-future-out cross validation (which also needs to perform some refits of the model).
+reloo function was also written. This function uses the sampling wrappers to calculate exact cross validation values 
+for problematic observations where numerical approximations do not work. After GSoC, we also plan on implementing a 
+numerical approximation of the leave-future-out cross validation (which also needs to perform some refits of the model).
 
 
 #### PRs in this caterory
@@ -78,12 +90,14 @@ they can guarantee that the MCMC has not converged which is quite an improvement
 serve this convergence assesment purpose. Work on this section was basically to add some new diagnostic plots following 
 [Vehtari et al 2019](https://arxiv.org/abs/1903.08008).
 
-* New plotting function `plot_ess` was created. It produces three different kinds of plot. The two first kinds `local` and
+* New plotting function [`plot_ess`](https://arviz-devs.github.io/arviz/generated/arviz.plot_ess.html#arviz.plot_ess) 
+was created. It produces three different kinds of plot. The two first kinds `local` and
 `quantile` are used to check that the MCMC has properly sampled all the parameter space; undersampling of some 
 region indicates convergence issues. In these two kinds, `plot_ess` allows to customize the appearance of the plot,
 to show rug values for any variable in `sample_stats` or to compare the plotted values with the `mean` and `sd` 
 effective sample. The third kind plots the evolution of the effective sample size which should be roughly linear. 
-* Another plotting function `plot_mcse` was also added to ArviZ. It plots the `local` or `quantile` Monte Carlo 
+* Another plotting function [`plot_mcse`](https://arviz-devs.github.io/arviz/generated/arviz.plot_mcse.html#arviz.plot_mcse) 
+was also added to ArviZ. It plots the `local` or `quantile` Monte Carlo 
 standard error either as a scatter plot or as errorbars on the parameter values. Both kinds allow similar options 
 to `plot_ess` such as customizing appearence or comparing with `mean` and `sd` MCSE.
 
@@ -104,15 +118,18 @@ This can help in detecting model limitations and finding ways to improve it. One
 checking is Leave-One-Out Probability Integral Transform (LOO-PIT) which also adds concepts from cross validation to model
 checking. This algorithm was added to ArviZ along with plots to interpretate it.
 
-* Calculation of LOO-PIT values was implemented in ArviZ using new stats function `az.loo_pit`. This function is 
+* Calculation of LOO-PIT values was implemented in ArviZ using new stats function 
+[`az.loo_pit`](https://arviz-devs.github.io/arviz/generated/arviz.loo_pit.html#arviz.loo_pit). This function is 
 extremely versatile and allows to combine data form InferenceData objects with array or DataArray inputs. 
 As LOO-PIT uses also concepts from LOO information criterion, the defaults used for dimension order and names are the 
 ones defined by the work in information criteria section.
-* A new plotting function `az.plot_loo_pit` was also added to plot and interpretate LOO-PIT values. It has two 
+* A new plotting function 
+[`az.plot_loo_pit`](https://arviz-devs.github.io/arviz/generated/arviz.plot_loo_pit.html#arviz.plot_loo_pit) 
+was also added to plot and interpretate LOO-PIT values. It has two 
 ways of showing LOO-PIT values, either plotting its kernel density estimate or plotting the difference between 
 the empirical cumulative density function of LOO-PIT values and the exact cumulative density function of a 
 uniform random variable.
-* Another stats function `az.apply_test_function` which eases the application of Bayesian test functions on 
+* Another stats function [`az.apply_test_function`](https://arviz-devs.github.io/arviz/generated/arviz.apply_test_function.html#arviz.apply_test_function) which eases the application of Bayesian test functions on 
 InferenceData objects was also written. This function however, as its docs explain, is generally slower than 
 using xarray or numpy vectorized calculations. This function is still relevant and useful for two main reasons. 
 The first is because it also uses `wrap_xarray_ufunc` and can then ease parallelization of test functions 
@@ -184,7 +201,8 @@ To see other parameters on the roadmap or how to add a new parameter see
   * `plot.max_subplots`: defines the maximum number of subplots ArviZ can add to a single figure. This prevents users to 
   inadvertedly call a plotting function on too many variables which would hang up its computer.
   * `stats.information_criterion`: sets the default information criterion between `waic` and `loo`.
-* A context manager, `az.rc_context`, was also added in order to temporarily change ArviZ defaults. 
+* A context manager, [`az.rc_context`](https://arviz-devs.github.io/arviz/generated/arviz.rc_context.html#arviz.rc_context), 
+was also added in order to temporarily change ArviZ defaults. 
 It allows either a dictionary or a file from which to read the temporal defaults as an input.
 
 #### PRs in this caterory
