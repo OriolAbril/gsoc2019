@@ -1,8 +1,8 @@
 ## Work done during GSoC
-To see all the work done suring the 2019 GSoC coding period, see this 
+To see all the work done during the 2019 GSoC coding period, see this 
 [pull request (PR) list](https://github.com/arviz-devs/arviz/pulls?page=1&q=is%3Apr+author%3AOriolAbril+archived%3Afalse+label%3AGSOC&utf8=%E2%9C%93).
-This document contains all my contributions during GSoC coding period. Below, these PRs are divided by category and 
-the most important contributions in each topic are summarized. To read more details on the new or modified functions, 
+This document contains all my contributions during GSoC coding period divided by category. In addition, the most 
+important contributions in each topic are summarized. To read more details on the new or modified functions, 
 see [ArviZ docs](https://arviz-devs.github.io/arviz/index.html), moreover, a direct link to each new or modified function is 
 available in its changelog summary. These are the different categories into which PRs have 
 been divided:
